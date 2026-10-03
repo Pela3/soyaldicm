@@ -42,6 +42,7 @@ if ('IntersectionObserver' in window) {
 // Visor de piezas del portfolio: recorre las imágenes del mismo caso
 const lightbox = document.querySelector('.lightbox');
 const lbImg = lightbox.querySelector('img');
+const lbVideo = lightbox.querySelector('video');
 const lbCaption = lightbox.querySelector('figcaption');
 let group = [];
 let current = 0;
@@ -50,9 +51,49 @@ function show(i) {
   current = (i + group.length) % group.length;
   const shot = group[current];
   const img = shot.querySelector('img');
-  lbImg.src = img.currentSrc || img.src;
-  lbImg.alt = img.alt;
+  const video = shot.dataset.video;
+  lightbox.classList.toggle('is-video', Boolean(video));
+  lbVideo.pause();
+  if (video) {
+    lbVideo.poster = img.currentSrc || img.src;
+    lbVideo.src = video;
+    lbVideo.play().catch(() => {});
+  } else {
+    lbVideo.removeAttribute('src');
+    lbImg.src = img.currentSrc || img.src;
+    lbImg.alt = img.alt;
+  }
   lbCaption.textContent = shot.dataset.caption;
+}
+
+lightbox.addEventListener('close', () => {
+  lbVideo.pause();
+  lbVideo.removeAttribute('src');
+  lbVideo.load();
+});
+
+// Reels: vista previa en silencio al pasar el mouse (solo escritorio)
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+  document.querySelectorAll('.shot-video').forEach((shot) => {
+    let preview;
+    shot.addEventListener('mouseenter', () => {
+      if (!preview) {
+        preview = document.createElement('video');
+        preview.src = shot.dataset.video;
+        preview.muted = true;
+        preview.loop = true;
+        preview.playsInline = true;
+        preview.addEventListener('playing', () => preview.classList.add('playing'));
+        shot.insertBefore(preview, shot.querySelector('.shot-play'));
+      }
+      preview.play().catch(() => {});
+    });
+    shot.addEventListener('mouseleave', () => {
+      if (!preview) return;
+      preview.pause();
+      preview.classList.remove('playing');
+    });
+  });
 }
 
 document.querySelectorAll('.case-gallery').forEach((gallery) => {
