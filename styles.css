@@ -574,7 +574,7 @@ p { margin: 0; }
   padding: clamp(2.5rem, 5vw, 4rem) 0;
   border-top: 1px solid var(--line);
 }
-.case-info { position: sticky; top: 6.5rem; }
+.case-info { position: relative; }
 .case-n {
   font-family: var(--serif);
   font-style: italic;
@@ -647,6 +647,56 @@ p { margin: 0; }
   -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
   mask-image: linear-gradient(90deg, #000 88%, transparent);
 }
+.case-gallery { scrollbar-width: none; }
+.case-gallery::-webkit-scrollbar { display: none; }
+.case-gallery.at-end { -webkit-mask-image: none; mask-image: none; }
+.case-gallery { grid-column: 2; }
+.case-info { grid-row: span 2; }
+.case { row-gap: 0.5rem; }
+
+.gallery-nav {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.gallery-nav[hidden] { display: none; }
+.gallery-progress {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  margin-right: 0.75rem;
+  border-radius: 2px;
+  background: var(--line);
+  overflow: hidden;
+}
+.gallery-progress span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  border-radius: 2px;
+  background: var(--wine);
+  transition: transform 120ms linear;
+}
+.gallery-btn {
+  display: grid;
+  place-items: center;
+  width: 2.75rem; height: 2.75rem;
+  flex: none;
+  border: 0;
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px rgba(31, 26, 23, 0.14);
+  cursor: pointer;
+  transition: background-color 200ms ease, color 200ms ease, opacity 200ms ease, transform 160ms var(--ease-out);
+}
+.gallery-btn svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.gallery-btn:active:not(:disabled) { transform: scale(0.94); }
+.gallery-btn:disabled { opacity: 0.35; cursor: default; }
+@media (hover: hover) and (pointer: fine) {
+  .gallery-btn:not(:disabled):hover { background: var(--ink); color: var(--cream); }
+}
+
 .case-gallery:focus-visible { outline: 2px solid var(--wine); outline-offset: 4px; border-radius: 1.5rem; }
 
 .shot {
@@ -845,6 +895,9 @@ p { margin: 0; }
   .service-wide { grid-column: span 2; }
   .steps { grid-template-columns: repeat(2, 1fr); gap: 2.5rem 2rem; }
   .case { grid-template-columns: 1fr; gap: 1.75rem; }
+  .case-gallery, .gallery-nav { grid-column: 1; }
+  .case-info { grid-row: auto; }
+  .gallery-nav { margin-top: -1.25rem; }
   .case-info { position: static; }
 }
 

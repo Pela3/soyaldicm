@@ -39,6 +39,49 @@ if ('IntersectionObserver' in window) {
   reveals.forEach((el) => el.classList.add('in'));
 }
 
+// Carruseles del portfolio: flechas + barra de progreso
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const ARROW_PREV = '<svg viewBox="0 0 16 16"><path d="M10 3L5 8l5 5"/></svg>';
+const ARROW_NEXT = '<svg viewBox="0 0 16 16"><path d="M6 3l5 5-5 5"/></svg>';
+
+document.querySelectorAll('.case-gallery').forEach((gallery) => {
+  const nav = document.createElement('div');
+  nav.className = 'gallery-nav';
+  nav.innerHTML = `
+    <div class="gallery-progress" aria-hidden="true"><span></span></div>
+    <button class="gallery-btn" aria-label="Ver anteriores">${ARROW_PREV}</button>
+    <button class="gallery-btn" aria-label="Ver siguientes">${ARROW_NEXT}</button>`;
+  gallery.after(nav);
+
+  const [prev, next] = nav.querySelectorAll('.gallery-btn');
+  const thumb = nav.querySelector('.gallery-progress span');
+
+  const step = () => {
+    const shot = gallery.querySelector('.shot');
+    const gap = parseFloat(getComputedStyle(gallery).columnGap) || 0;
+    const width = shot.offsetWidth + gap;
+    return Math.max(width, Math.floor(gallery.clientWidth / width) * width);
+  };
+  const go = (dir) => gallery.scrollBy({ left: dir * step(), behavior: reduceMotion ? 'auto' : 'smooth' });
+  prev.addEventListener('click', () => go(-1));
+  next.addEventListener('click', () => go(1));
+
+  const update = () => {
+    const max = gallery.scrollWidth - gallery.clientWidth;
+    const x = gallery.scrollLeft;
+    nav.hidden = max <= 4;
+    prev.disabled = x <= 4;
+    next.disabled = x >= max - 4;
+    gallery.classList.toggle('at-end', x >= max - 4);
+    const ratio = gallery.clientWidth / gallery.scrollWidth;
+    thumb.style.width = `${ratio * 100}%`;
+    thumb.style.transform = `translateX(${max > 0 ? (x / max) * (1 / ratio - 1) * 100 : 0}%)`;
+  };
+  gallery.addEventListener('scroll', update, { passive: true });
+  new ResizeObserver(update).observe(gallery);
+  update();
+});
+
 // Visor de piezas del portfolio: recorre las imágenes del mismo caso
 const lightbox = document.querySelector('.lightbox');
 const lbImg = lightbox.querySelector('img');
