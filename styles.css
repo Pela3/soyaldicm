@@ -899,6 +899,8 @@ p { margin: 0; }
   .case-info { grid-row: auto; }
   .gallery-nav { margin-top: -1.25rem; }
   .case-info { position: static; }
+  .float-a { left: -8%; }
+  .float-b { right: -4%; }
 }
 
 @media (max-width: 860px) {
