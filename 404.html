@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página no encontrada · Aldana Escudero</title>
+  <meta name="theme-color" content="#F6F1EA">
+  <link rel="icon" href="favicon.ico" sizes="48x48">
+  <link rel="icon" href="assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F6F1EA; --ink: #1F1A17; --ink-soft: #5E554E; --wine: #7A1F2B;
+      --serif: "Instrument Serif", serif; --sans: "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100dvh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.5rem; padding: 2rem 1.5rem; text-align: center;
+      background: var(--cream); color: var(--ink); font-family: var(--sans);
+    }
+    .code {
+      font-family: var(--serif); font-size: clamp(5rem, 22vw, 11rem);
+      line-height: 0.9; letter-spacing: -0.02em; margin: 0;
+    }
+    .code em { font-style: italic; color: var(--wine); }
+    h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(1.6rem, 5vw, 2.4rem); margin: 0; }
+    p { max-width: 30rem; margin: 0; color: var(--ink-soft); }
+    a.btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      margin-top: 0.75rem; padding: 0.85rem 1.6rem;
+      border-radius: 999px; background: var(--ink); color: var(--cream);
+      font-size: 0.95rem; font-weight: 500; text-decoration: none;
+      transition: background-color 200ms ease, transform 160ms ease;
+    }
+    a.btn:hover { background: var(--wine); }
+    a.btn:active { transform: scale(0.97); }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) { --cream: #1A1613; --ink: #F6F1EA; --ink-soft: #C8BDB2; --wine: #E8A9A0; }
+    }
+  </style>
+</head>
+<body>
+  <p class="code">4<em>0</em>4</p>
+  <h1>Esta página no existe</h1>
+  <p>Puede que el enlace esté mal escrito o que la página se haya movido.</p>
+  <a class="btn" href="/soyaldicm/">Volver al inicio</a>
+</body>
+</html>
